@@ -15,7 +15,6 @@ interface Props {
 const ModalWindow: React.FC<Props> = ({id, input, product}) => {
 
     const dispatch = useTypedDispatch()
-    const navigate = useNavigate()
     const [name, setName] = useState(product?.name || '')
     const [imageUrl, setImageUrl] = useState(product?.imageUrl || '')
     const [count, setCount] = useState(product?.count || 0)
@@ -83,7 +82,7 @@ const ModalWindow: React.FC<Props> = ({id, input, product}) => {
                 {id === -1 
                 ? <button className={s.button} onClick={() => addProduct()}>Add</button>
                 : input 
-                    ? <><button className={s.button} onClick={() => editProduct()}>Edit</button><button className={s.button} onClick={() => deleteProduct()}>Delete</button></>
+                    ? <button className={s.button} onClick={() => editProduct()}>Edit</button>
                     : <button className={s.button} onClick={() => deleteProduct()}>Delete</button>}
             </div>
 

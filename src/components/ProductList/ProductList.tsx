@@ -4,7 +4,6 @@ import { useTypedDispatch } from '../../hooks/useTypedDispatch'
 import { useTypedSelector } from '../../hooks/useTypedSelector'
 import { IProduct } from '../../types/models/IProduct'
 import {showWIndowActionCreator } from '../../store/reducers/modalWindowReducer'
-import { SortByNameActionCreator } from '../../store/reducers/productsReducer'
 import * as _ from 'lodash'
 import ModalWindow from '../ModalWindow/ModalWindow'
 import s from './ProductList.module.sass'
@@ -81,9 +80,9 @@ const ProductList: FC = () => {
                         :<ModalWindow id={deleteId} input={deleteId === -1 ? true : false}></ModalWindow>}
             {sorted?.map((product: IProduct) => {
                 return(
-                <div key={product.id} className={s.product} onClick={(e) => navigate(`/product/${product.id}`)}>
+                <div key={product.id} className={s.product}>
                     
-                    <span className={s.name}> {product.name}</span>
+                    <span className={s.name} onClick={(e) => navigate(`/product/${product.id}`)}> {product.name}</span>
                     <button className={s.button} onClick={() => deleteProduct(product.id || 1312)}>delete</button>
                 </div>
                 )
