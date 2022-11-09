@@ -8,6 +8,7 @@ export enum ProductActionTypes {
     ADD_PRODUCT = 'ADD_PRODUCT',
     DELETE_PRODUCT = 'DELETE_PRODUCT',
     EDIT_PRODUCT = 'EDIT_PRODUCT',
+    SET_PRODUCT = 'SET_PRODUCT'
 }
 
 interface SetProductsActionInterface {
@@ -27,7 +28,13 @@ interface DeleteProductActionInterface {
     payload?: {id: number}
 }
 
+interface SetProductActionInterface {
+    type: ProductActionTypes.SET_PRODUCT,
+    payload: any
+}
+
 export type ProductsAction = SetProductsActionInterface 
     | AddProductActionInterface 
     | EditProductActionInterface 
     | DeleteProductActionInterface 
+    | SetProductActionInterface

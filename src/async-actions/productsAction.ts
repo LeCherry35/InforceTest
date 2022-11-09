@@ -14,6 +14,16 @@ export const getProductsAsync = () => {
         }
     }
 }
+export const getProductAsync = (id: number) => {
+    return async (dispatch: Dispatch<ProductsAction>) => {
+        try {
+            const res = await ProductsService.getProduct(id)
+            dispatch({type: ProductActionTypes.SET_PRODUCT,payload: res.data})
+        } catch(e) {
+            console.log(e)
+        }
+    }
+}
 export const addProductAsync = (product:IProduct) => {
     return async (dispatch: Dispatch<ProductsAction>) => {
         try {

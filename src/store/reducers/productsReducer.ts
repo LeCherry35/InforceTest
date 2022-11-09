@@ -11,6 +11,8 @@ export const productsReducer = (state = initialState, action: ProductsAction): P
     switch (action.type) {
         case ProductActionTypes.SET_PRODUCTS: 
             return {products:[...action.payload]}
+        case ProductActionTypes.SET_PRODUCT:
+            return{products:[action.payload]}
         case ProductActionTypes.ADD_PRODUCT:
             const cloneAdd: IProduct[] | undefined = _.cloneDeep(state.products)
             cloneAdd?.push(action.payload)

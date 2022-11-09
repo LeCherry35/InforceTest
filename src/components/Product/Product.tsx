@@ -1,5 +1,6 @@
 import React, { FC, useState, useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
+import { getProductAsync } from '../../async-actions/productsAction'
 import { useTypedDispatch } from '../../hooks/useTypedDispatch'
 import { useTypedSelector } from '../../hooks/useTypedSelector'
 import { showWIndowActionCreator } from '../../store/reducers/modalWindowReducer'
@@ -15,11 +16,18 @@ const Product:FC = () => {
   const idNum = id ? + id : 0
   const {hidden} = useTypedSelector(state => state.modalWindow)
   const {products} = useTypedSelector(state => state.products)
-  const [product] = useState(products?.find(p => p.id === idNum))
+  const [product,setProduct] = useState(products?.find(p => p.id === idNum))
   
   useEffect(()=>{
-
-  },[hidden])
+    if(!product) {
+      dispatch(getProductAsync(idNum))
+    }
+  },[dispatch, idNum, product])
+  useEffect(() => {
+    if(!product) {
+      setProduct(products?.[0])
+    }
+  },[products])
   return (
     <div className={s.container}>
       {hidden 
