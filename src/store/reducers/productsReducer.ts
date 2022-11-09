@@ -11,32 +11,26 @@ export const productsReducer = (state = initialState, action: ProductsAction): P
     switch (action.type) {
         case ProductActionTypes.SET_PRODUCTS: 
             return {products:[...action.payload]}
-        case ProductActionTypes.SORT_BY_NAME:
-            const p = _.cloneDeep(state.products)?.sort((a, b) => {
-                const nameA = a?.name?.toUpperCase(); // ignore upper and lowercase
-                const nameB = b?.name?.toUpperCase(); // ignore upper and lowercase
-                if(nameA && nameB) {
-                    if (nameA < nameB) {
-                        return -1;
-                    }
-                    if (nameA > nameB) {
-                        return 1;
-                    }
-                }
-                return 0;
-              });
-              console.log('p',p);
-              
+        case ProductActionTypes.ADD_PRODUCT:
+            const cloneAdd: IProduct[] | undefined = _.cloneDeep(state.products)
+            cloneAdd?.push(action.payload)
+            return {products: cloneAdd}
+        case ProductActionTypes.DELETE_PRODUCT:
+            const cloneDel: IProduct[] | undefined = _.cloneDeep(state.products)
+            console.log('aa', action.payload);
             
-            return {...state,products: p}
+            cloneDel?.filter(product => product.id !== action.payload?.id)
+            return {products:cloneDel}
+            case ProductActionTypes.EDIT_PRODUCT:
+            const cloneEdit: IProduct[] | undefined = _.cloneDeep(state.products)
+            cloneEdit?.forEach(product => {
+                if(product.id === action.payload.id) {
+                    product = action.payload
+                }
+            })
+            return {products:cloneEdit}
         default:
             return state
     }
 }
 
-export const SortByNameActionCreator = () => {
-    return {type: ProductActionTypes.SORT_BY_NAME}
-}
-export const SortByCountActionCreator = () => {
-    return {type: ProductActionTypes.SORT_BY_COUNT}
-}

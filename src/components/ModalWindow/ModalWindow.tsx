@@ -3,7 +3,6 @@ import { useTypedDispatch } from '../../hooks/useTypedDispatch'
 import { hideWIndowActionCreator } from '../../store/reducers/modalWindowReducer'
 import {addProductAsync, deleteProductAsync, editProductAsync} from '../../async-actions/productsAction'
 import s from './ModalWindow.module.sass'
-import { useNavigate } from 'react-router-dom'
 import { IProduct } from '../../types/models/IProduct'
 
 interface Props {

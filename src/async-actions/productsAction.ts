@@ -18,7 +18,8 @@ export const addProductAsync = (product:IProduct) => {
     return async (dispatch: Dispatch<ProductsAction>) => {
         try {
             const res = await ProductsService.addProduct(product)
-            console.log('added', res)
+            dispatch({type: ProductActionTypes.ADD_PRODUCT, payload: res.data})
+            console.log('added', res.data)
         } catch(e) {
             console.log(e);
             
@@ -29,7 +30,8 @@ export const deleteProductAsync = (id:number) => {
     return async (dispatch: Dispatch<ProductsAction>) => {
         try {
             const res = await ProductsService.deleteProduct(id)
-            console.log('deleted', res)
+            dispatch({type: ProductActionTypes.DELETE_PRODUCT, payload:{id}})
+            console.log('deleted', res.data)
         } catch(e) {
             console.log(e);
             
@@ -40,7 +42,8 @@ export const editProductAsync = (product:IProduct) => {
     return async (dispatch: Dispatch<ProductsAction>) => {
         try {
             const res = await ProductsService.editProduct(product)
-            console.log('edited', res)
+            dispatch({type: ProductActionTypes.EDIT_PRODUCT, payload:product})
+            console.log('edited', res.data)
         } catch(e) {
             console.log(e);
             

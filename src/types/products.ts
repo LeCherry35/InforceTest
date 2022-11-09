@@ -8,8 +8,6 @@ export enum ProductActionTypes {
     ADD_PRODUCT = 'ADD_PRODUCT',
     DELETE_PRODUCT = 'DELETE_PRODUCT',
     EDIT_PRODUCT = 'EDIT_PRODUCT',
-    SORT_BY_NAME = 'SORT_BY_NAME',
-    SORT_BY_COUNT = 'SORT_BY_COUNT'
 }
 
 interface SetProductsActionInterface {
@@ -26,18 +24,10 @@ interface EditProductActionInterface {
 }
 interface DeleteProductActionInterface {
     type: ProductActionTypes.DELETE_PRODUCT
-    payload: {id: number}
-}
-interface SortByNameActionInterface {
-    type: ProductActionTypes.SORT_BY_NAME
-}
-interface SortByCountActionInterface {
-    type: ProductActionTypes.SORT_BY_COUNT
+    payload?: {id: number}
 }
 
 export type ProductsAction = SetProductsActionInterface 
     | AddProductActionInterface 
     | EditProductActionInterface 
     | DeleteProductActionInterface 
-    | SortByNameActionInterface
-    | SortByCountActionInterface

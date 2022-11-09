@@ -15,7 +15,7 @@ const Product:FC = () => {
   const idNum = id ? + id : 0
   const {hidden} = useTypedSelector(state => state.modalWindow)
   const {products} = useTypedSelector(state => state.products)
-  const [product, setProduct] = useState(products?.find(p => p.id === idNum))
+  const [product] = useState(products?.find(p => p.id === idNum))
   
   useEffect(()=>{
 
@@ -38,7 +38,7 @@ const Product:FC = () => {
       {product?.weight && <><span>Weight</span>
       <p className={s.input}>{product?.weight}</p></>}
       <button className={s.button}onClick={(e)=>dispatch(showWIndowActionCreator())} >Edit</button>
-      <button className={s.button}onClick={(e)=>navigate('/productList')} >See all</button>
+      <button className={s.button}onClick={(e)=>navigate('/')} >See all</button>
       <Comments id={idNum}></Comments>
 
     </div>

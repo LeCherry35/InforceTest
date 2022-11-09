@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react'
-import { setCommentsAsync } from '../../async-actions/commentsAction'
+import React, { useEffect, useState } from 'react'
+import { addCommentAsync, setCommentsAsync } from '../../async-actions/commentsAction'
 import { useTypedDispatch } from '../../hooks/useTypedDispatch'
 import { useTypedSelector } from '../../hooks/useTypedSelector'
 
@@ -10,17 +10,26 @@ const Comments: React.FC<Props> = ({id}) => {
 
   const dispatch = useTypedDispatch()
   const {comments} = useTypedSelector(state => state.comments)
-
+  const [newComment, setNewComment] = useState('')
   useEffect(() => {
-    dispatch(setCommentsAsync())
-  },[])
-  useEffect(() => {
-    console.log(comments);
-    
-  },[comments])
+    dispatch(setCommentsAsync(id))
+  },[dispatch,id])
   return (
     
-    <div>Comments</div>
+    <div>Comments
+      {comments?.map(comment => {
+        return (
+          <div key={comment.id}>
+            <p>{comment.description}</p>
+            <p>Date: {comment.date}</p>
+          </div>
+        )
+      })}
+      <input type='text' onChange={(e) => setNewComment(e.target.value)} value={newComment} placeholder='Write comment'></input>
+      <button onClick={(e) => {
+        dispatch(addCommentAsync(id, newComment))
+      }}>Add comment</button>
+    </div>
   )
 }
 

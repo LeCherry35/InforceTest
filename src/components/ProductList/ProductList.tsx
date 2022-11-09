@@ -21,7 +21,7 @@ const ProductList: FC = () => {
 
     useEffect(() => {
       dispatch(getProductsAsync())
-    }, [hidden])
+    }, [dispatch])
     useEffect(() => {
         switch (sortBy) {
             case 'name': 
@@ -75,6 +75,10 @@ const ProductList: FC = () => {
 
     return (
         <div className={s.container}>
+            <div>sort by:
+                <button  onClick={() => setSortBy('name')}>name</button>
+                <button  onClick={() => setSortBy('count')}>count</button>
+            </div>
             {hidden 
                         ? <></>
                         :<ModalWindow id={deleteId} input={deleteId === -1 ? true : false}></ModalWindow>}
@@ -88,11 +92,7 @@ const ProductList: FC = () => {
                 )
             })}
             <button className={s.button} onClick={() => addProduct()}>add product</button>
-            <button className={s.button} onClick={() => setSortBy('name')}>n</button>
-            <button className={s.button} onClick={() => setSortBy('count')}>c</button>
             
-
-
         </div>
     )
 }
