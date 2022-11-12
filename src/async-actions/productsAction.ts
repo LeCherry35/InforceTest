@@ -3,6 +3,7 @@ import { ProductsAction } from './../types/products';
 import { ProductActionTypes } from "../types/products"
 import { Dispatch } from 'redux'
 import ProductsService from '../services/productsService';
+import CommentsService from '../services/commentsService';
 
 export const getProductsAsync = () => {
     return async (dispatch: Dispatch<ProductsAction>) => {
@@ -39,9 +40,14 @@ export const addProductAsync = (product:IProduct) => {
 export const deleteProductAsync = (id:number) => {
     return async (dispatch: Dispatch<ProductsAction>) => {
         try {
-            const res = await ProductsService.deleteProduct(id)
+            await ProductsService.deleteProduct(id)
             dispatch({type: ProductActionTypes.DELETE_PRODUCT, payload:{id}})
-            console.log('deleted', res.data)
+            const commentsRes = await CommentsService.getComments(id)
+            commentsRes.data.forEach(comment => {
+                comment.id && CommentsService.deleteComment(comment.id)
+            })
+            
+                
         } catch(e) {
             console.log(e);
             

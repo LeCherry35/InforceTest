@@ -18,18 +18,23 @@ export const productsReducer = (state = initialState, action: ProductsAction): P
             cloneAdd?.push(action.payload)
             return {products: cloneAdd}
         case ProductActionTypes.DELETE_PRODUCT:
-            const cloneDel: IProduct[] | undefined = _.cloneDeep(state.products)
-            console.log('aa', action.payload);
+            const clone: IProduct[] | undefined = _.cloneDeep(state.products)
             
-            cloneDel?.filter(product => product.id !== action.payload?.id)
+            const cloneDel = clone?.filter(product => {
+                return product.id !== action.payload?.id
+            })
+            
+
             return {products:cloneDel}
-            case ProductActionTypes.EDIT_PRODUCT:
+        case ProductActionTypes.EDIT_PRODUCT:
             const cloneEdit: IProduct[] | undefined = _.cloneDeep(state.products)
             cloneEdit?.forEach(product => {
                 if(product.id === action.payload.id) {
                     product = action.payload
                 }
             })
+            console.log('r', cloneEdit === state.products);
+            
             return {products:cloneEdit}
         default:
             return state

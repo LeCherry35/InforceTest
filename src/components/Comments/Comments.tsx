@@ -28,6 +28,7 @@ const Comments: React.FC<Props> = ({id}) => {
       <input type='text' onChange={(e) => setNewComment(e.target.value)} value={newComment} placeholder='Write comment'></input>
       <button onClick={(e) => {
         dispatch(addCommentAsync(id, newComment))
+        setNewComment('')
       }}>Add comment</button>
     </div>
   )
