@@ -15,36 +15,30 @@ const Product:FC = () => {
   const {id} = useParams<{id: string}>()
   const idNum = id ? + id : 0
   const {hidden} = useTypedSelector(state => state.modalWindow)
-  const {products} = useTypedSelector(state => state.products)
-  const [product,setProduct] = useState(products?.find(p => p.id === idNum))
+  const {selectedProduct} = useTypedSelector(state => state.products)
   
   useEffect(()=>{
-    if(!product) {
       dispatch(getProductAsync(idNum))
-    }
-  },[dispatch, idNum, product])
-  useEffect(() => {
-    if(!product) {
-      setProduct(products?.[0])
-    }
-  },[products])
+    
+  },[dispatch, idNum, selectedProduct])
+
   return (
     <div className={s.container}>
       {hidden 
         ? <></>
-        :<ModalWindow id={idNum} input={true} product={product}></ModalWindow>}
-      <span className={s.name} >{product?.name}</span>
+        :<ModalWindow id={idNum} input={true} product={selectedProduct}></ModalWindow>}
+      <span className={s.name} >{selectedProduct?.name}</span>
       
-      {product?.imageUrl && <><span>Image URL</span>
-      <p className={s.field}>{product?.imageUrl}</p></>}
-      {product?.count && <><span>Count</span>
-      <p className={s.field}>{product?.count}</p></>}
+      {selectedProduct?.imageUrl && <><span>Image URL</span>
+      <p className={s.field}>{selectedProduct?.imageUrl}</p></>}
+      {selectedProduct?.count && <><span>Count</span>
+      <p className={s.field}>{selectedProduct?.count}</p></>}
       {<><span>Width</span>
-      <p className={s.field}>{product?.size?.width}</p></>}
+      <p className={s.field}>{selectedProduct?.size?.width}</p></>}
       {<><span>Height</span>
-      <p className={s.field}>{product?.size?.height}</p></>}
-      {product?.weight && <><span>Weight</span>
-      <p className={s.input}>{product?.weight}</p></>}
+      <p className={s.field}>{selectedProduct?.size?.height}</p></>}
+      {selectedProduct?.weight && <><span>Weight</span>
+      <p className={s.input}>{selectedProduct?.weight}</p></>}
       <button className={s.button}onClick={(e)=>dispatch(showWIndowActionCreator())} >Edit</button>
       <button className={s.button}onClick={(e)=>navigate('/')} >See all</button>
       <Comments id={idNum}></Comments>

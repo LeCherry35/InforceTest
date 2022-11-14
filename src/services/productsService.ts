@@ -7,7 +7,7 @@ export default  class ProductsService {
         const res = await $api.get('/Products')
         return res
     }
-    static async getProduct(id:number) :Promise<AxiosResponse<IProduct[]>> {
+    static async getProduct(id:number) :Promise<AxiosResponse<IProduct>> {
         const res = await $api.get('/Products/' + id)
         return res
     }

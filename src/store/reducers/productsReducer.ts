@@ -4,19 +4,20 @@ import * as _ from 'lodash'
 import { IProduct } from '../../types/models/IProduct';
 
 const initialState: ProductsState = {
-    
+    products:[],
+    selectedProduct:{}
 }
 
 export const productsReducer = (state = initialState, action: ProductsAction): ProductsState => {
     switch (action.type) {
         case ProductActionTypes.SET_PRODUCTS: 
-            return {products:[...action.payload]}
+            return {...state, products:[...action.payload]}
         case ProductActionTypes.SET_PRODUCT:
-            return{products:[action.payload]}
+            return{...state, selectedProduct:action.payload}
         case ProductActionTypes.ADD_PRODUCT:
             const cloneAdd: IProduct[] | undefined = _.cloneDeep(state.products)
             cloneAdd?.push(action.payload)
-            return {products: cloneAdd}
+            return {...state, products: cloneAdd}
         case ProductActionTypes.DELETE_PRODUCT:
             const clone: IProduct[] | undefined = _.cloneDeep(state.products)
             
@@ -25,17 +26,14 @@ export const productsReducer = (state = initialState, action: ProductsAction): P
             })
             
 
-            return {products:cloneDel}
+            return {...state, products:cloneDel}
         case ProductActionTypes.EDIT_PRODUCT:
-            const cloneEdit: IProduct[] | undefined = _.cloneDeep(state.products)
-            cloneEdit?.forEach(product => {
-                if(product.id === action.payload.id) {
-                    product = action.payload
-                }
+            const cloneEdit = state.products?.map(product => {
+                return (product.id === action.payload.id) ? action.payload : product
             })
-            console.log('r', cloneEdit === state.products);
+            console.log('r',cloneEdit);
             
-            return {products:cloneEdit}
+            return {...state, products:cloneEdit}
         default:
             return state
     }

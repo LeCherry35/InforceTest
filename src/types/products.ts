@@ -1,7 +1,8 @@
 import { IProduct } from "./models/IProduct";
 
 export interface ProductsState {
-    products?: IProduct []
+    products?: IProduct [],
+    selectedProduct: IProduct
 }
 export enum ProductActionTypes {
     SET_PRODUCTS = 'SET_PRODUCTS',
@@ -30,7 +31,7 @@ interface DeleteProductActionInterface {
 
 interface SetProductActionInterface {
     type: ProductActionTypes.SET_PRODUCT,
-    payload: any
+    payload: IProduct
 }
 
 export type ProductsAction = SetProductsActionInterface 
