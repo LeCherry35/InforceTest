@@ -8,6 +8,7 @@ import * as _ from 'lodash'
 import ModalWindow from '../ModalWindow/ModalWindow'
 import s from './ProductList.module.sass'
 import { useNavigate } from 'react-router-dom'
+import { sortByCount, sortByName } from '../../helpers/sort'
 
 const ProductList: FC = () => {
     const {products} = useTypedSelector(state => state.products)
@@ -23,41 +24,14 @@ const ProductList: FC = () => {
       dispatch(getProductsAsync())
     }, [dispatch])
     useEffect(() => {
+        
         switch (sortBy) {
             case 'name': 
-                const productsSortedByName = _.cloneDeep(products)?.sort((a, b) => {
-                    const nameA = a?.name?.toUpperCase(); // ignore upper and lowercase
-                    const nameB = b?.name?.toUpperCase(); // ignore upper and lowercase
-                    if(nameA && nameB) {
-                        if (nameA < nameB) {
-                            return -1;
-                        }
-                        if (nameA > nameB) {
-                            return 1;
-                        }
-                    }
-                    return 0;
-                })
+                const productsSortedByName = products && sortByName(_.cloneDeep(products))
                 setSorted(productsSortedByName)
                 break
             case 'count':
-                const productsSortedByCount= _.cloneDeep(products)?.sort((a, b) => {
-                    if (a.count && b.count) {
-                        return b.count - a.count
-                    } else {
-                        const nameA = a?.name?.toUpperCase(); // ignore upper and lowercase
-                        const nameB = b?.name?.toUpperCase(); // ignore upper and lowercase
-                        if(nameA && nameB) {
-                            if (nameA < nameB) {
-                                return -1;
-                            }
-                            if (nameA > nameB) {
-                                return 1;
-                            }
-                        }
-                        return 0;
-                    }
-                })
+                const productsSortedByCount= products && sortByCount(_.cloneDeep(products)) 
                 setSorted(productsSortedByCount)
                 break
         }
@@ -75,9 +49,14 @@ const ProductList: FC = () => {
 
     return (
         <div className={s.container}>
-            <div>sort by:
-                <button  onClick={() => setSortBy('name')}>name</button>
-                <button  onClick={() => setSortBy('count')}>count</button>
+            <div className={s.sortPanel}>Sort by:
+                <select  className={s.select} onChange={(e) => {
+                    setSortBy(e.target.value)
+                }}>
+                    <option value='name'>name</option>
+                    <option value='count'>count</option>
+
+                </select>
             </div>
             {hidden 
                         ? <></>
