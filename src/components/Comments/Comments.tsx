@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { addCommentAsync, setCommentsAsync } from '../../async-actions/commentsAction'
+import { addCommentAsync, deleteCommentAsync, setCommentsAsync } from '../../async-actions/commentsAction'
 import { useTypedDispatch } from '../../hooks/useTypedDispatch'
 import { useTypedSelector } from '../../hooks/useTypedSelector'
 
@@ -22,6 +22,7 @@ const Comments: React.FC<Props> = ({id}) => {
           <div key={comment.id}>
             <p>{comment.description}</p>
             <p>Date: {comment.date}</p>
+            <button onClick={() => dispatch(deleteCommentAsync(comment.id || 1312))}>delete</button>
           </div>
         )
       })}

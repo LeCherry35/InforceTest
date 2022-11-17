@@ -29,3 +29,14 @@ export const addCommentAsync = (id:number, text: string) => {
         }
     }
 }
+export const deleteCommentAsync = (id:number) => {
+    return async ( dispatch: Dispatch<commentsAction>) => {
+        try {
+            await CommentsService.deleteComment(id)
+            dispatch({type: CommentsActionTypes.DELETE_COMMENT, payload:{id}})
+        } catch (e) {
+            console.log(e);
+            
+        }
+    }
+}
