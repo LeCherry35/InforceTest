@@ -1,12 +1,16 @@
+import { showPreloaderActionCreator, hidePreloaderActionCreator } from './../store/reducers/preloaderReducer';
 import { commentsAction, CommentsActionTypes } from '../types/comments';
 import { Dispatch } from 'redux'
 import CommentsService from '../services/commentsService'
+import { PreloaderAction } from '../types/preloader';
 
 export const setCommentsAsync = (id:number) => {
-    return async (dispatch: Dispatch<commentsAction>) => {
+    return async (dispatch: Dispatch<commentsAction | PreloaderAction>) => {
         try {
+            dispatch(showPreloaderActionCreator())
             const res = await CommentsService.getComments(id)
             dispatch({type: CommentsActionTypes.SET_COMMENTS, payload: res.data})
+            dispatch(hidePreloaderActionCreator())
         } catch(e) {
             console.log(e)
         }

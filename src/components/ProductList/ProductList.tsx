@@ -9,9 +9,11 @@ import ModalWindow from '../ModalWindow/ModalWindow'
 import s from './ProductList.module.sass'
 import { useNavigate } from 'react-router-dom'
 import { sortByCount, sortByName } from '../../helpers/sort'
+import Preloader from '../Preloader/Preloader'
 
 const ProductList: FC = () => {
     const {products} = useTypedSelector(state => state.products)
+    const {isLoading} = useTypedSelector(state => state.preloader)
     const {hidden} = useTypedSelector(state => state.modalWindow)
     const [sortBy, setSortBy] = useState('name')
     const [sorted, setSorted] = useState(products)
@@ -21,8 +23,10 @@ const ProductList: FC = () => {
     let navigate = useNavigate();
 
     useEffect(() => {
-      dispatch(getProductsAsync())
-    }, [dispatch])
+        if (products?.length === 0) {
+            dispatch(getProductsAsync())
+        }
+    }, [dispatch,products?.length])
     useEffect(() => {
         
         switch (sortBy) {
@@ -61,15 +65,18 @@ const ProductList: FC = () => {
             {hidden 
                         ? <></>
                         :<ModalWindow id={deleteId} input={deleteId === -1 ? true : false}></ModalWindow>}
-            {sorted?.map((product: IProduct) => {
-                return(
-                <div key={product.id} className={s.product}>
-                    
-                    <span className={s.name} onClick={(e) => navigate(`/product/${product.id}`)}> {product.name}</span>
-                    <button className={s.button} onClick={() => deleteProduct(product.id || 1312)}>delete</button>
-                </div>
-                )
-            })}
+            {isLoading 
+                ? <Preloader/>
+                : sorted?.map((product: IProduct) => {
+                    return(
+                    <div key={product.id} className={s.product}>
+                        
+                        <span className={s.name} onClick={(e) => navigate(`/product/${product.id}`)}> {product.name}</span>
+                        <button className={s.button} onClick={() => deleteProduct(product.id || 1312)}>delete</button>
+                    </div>
+                    )
+                })
+            }
             <button className={s.button} onClick={() => addProduct()}>add product</button>
             
         </div>

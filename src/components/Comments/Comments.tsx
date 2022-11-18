@@ -16,7 +16,7 @@ const Comments: React.FC<Props> = ({id}) => {
   },[dispatch,id])
   return (
     
-    <div>Comments
+    <div><h4>Comments</h4>
       {comments?.map(comment => {
         return (
           <div key={comment.id}>

@@ -24,8 +24,6 @@ export const productsReducer = (state = initialState, action: ProductsAction): P
             const cloneDel = clone?.filter(product => {
                 return product.id !== action.payload?.id
             })
-            
-
             return {...state, products:cloneDel}
         case ProductActionTypes.EDIT_PRODUCT:
             const cloneEdit = state.products?.map(product => {

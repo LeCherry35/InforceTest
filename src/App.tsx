@@ -8,12 +8,10 @@ import ProductList from './components/ProductList/ProductList';
 function App() {
   return (
     <div className="App">
-      {/* <Product></Product> */}
       <BrowserRouter>
         <Routes>
           <Route path='/' element={<ProductList/>}/>
           <Route path='/product/:id' element={<Product/>}/>
-
         </Routes>
       </BrowserRouter>
     </div>

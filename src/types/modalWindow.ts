@@ -4,9 +4,7 @@ export interface ModalWindowState {
 
 export enum ModalWindowActionTypes {
     HIDE_WINDOW = 'HIDE_WINDOW',
-    SHOW_WINDOW = 'SHOW_WINDOW',
-    SET_SUBJECT_ADD = 'SET_SUBJECT_ADD',
-    SET_SUBJECT_DELETE = 'SET_SUBJECT_DELETE'
+    SHOW_WINDOW = 'SHOW_WINDOW'
 }
 
 interface HideWindowActionInterface {
